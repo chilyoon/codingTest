@@ -69,6 +69,7 @@ def dfs(V):
         # i 값으로 다시 재귀함수
         if not dfs_g[i] and graph[V][i] == 1:
             dfs(i)
+        # 연결되어 있는데 아직 방문을 안한 조건 
 
 # BFS 넓이우선탐색
 def bfs(V):
