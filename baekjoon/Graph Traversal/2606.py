@@ -30,7 +30,9 @@
 예제 출력 1 
 4
 '''
-
+import sys
+from collections import deque
+input = sys.stdin.readline
 
 N = int(input()) # 정점 수
 M = int(input()) # 간선 수
@@ -39,6 +41,7 @@ cnt = 0
 
 graph = [[0]*(N+1) for _ in range(N+1)]
 dfs_g = [False] * (N+1)
+visit = [False] * (N+1)
 
 for _ in range(M):
     x,y = map(int, input().split())
@@ -53,6 +56,20 @@ def dfs(V):
             cnt += 1
             dfs(i)
             
+queue = deque()
+queue.append(V)
+def bfs():
+    global cnt
+    visit[1] = True
+    while queue:
+        c = queue.popleft()
+        for i in range(1,N+1):
+            if not visit[i] and graph[c][i] == 1:
+                cnt += 1
+                visit[i] = True
+                queue.append(i)
 
-dfs(V)
+
+bfs()
+#dfs(V)
 print(cnt)
