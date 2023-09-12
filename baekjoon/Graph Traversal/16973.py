@@ -91,3 +91,71 @@ while queue:
                     visit[ny][nx] = visit[y][x] + 1
                     queue.append((nx,ny))
 print(-1)
+
+# 시간초과 오답
+'''
+import sys
+from collections import deque
+input = sys.stdin.readline
+
+N,M = map(int, input().split())
+# 0 빈칸 1 벽
+rect = [list(map(int, input().split())) for _ in range(N)]
+visit = [[-1]*M for _ in range(N)]
+# 직사각형의 크기 H(y),W(x) 시작좌표 Sr,Sc 도착 좌표 Fr,Fc
+# 좌표는 직사각형의 가장 왼쪽 위
+# 1 <= r <= N 행(y) 1 <= c <= M 열(x)
+H,W,Sr,Sc,Fr,Fc = map(int, input().split())
+visit[Sr-1][Sc-1] = 0
+queue = deque([(Sc-1,Sr-1)])
+# 좌 우 상 하
+dx,dy = [-1,1,0,0],[0,0,-1,1]
+
+while queue:
+    x,y = queue.popleft()
+    # print('x %d y %d' % (x,y))
+    if x == Fc-1 and y == Fr-1:
+        # print(*visit, sep='\n')
+        print(visit[y][x])
+        sys.exit()
+    # 상
+    flag = True
+    for i in range(W):
+        nx = x + i
+        if 0 > y-1 or rect[y-1][nx] == 1 or visit[y-1][nx] != -1:
+            flag = False
+            break
+    if flag:
+        queue.append((x,y-1))
+        visit[y-1][x] = visit[y][x] + 1
+    # 하
+    flag = True
+    for i in range(W):
+        nx = x + i
+        if y+H >= N or rect[y+H][x] == 1 or visit[y+H][x] != -1:
+            flag = False
+            break
+    if flag:
+        queue.append((x,y+1))
+        visit[y+1][x] = visit[y][x] + 1
+    # 좌
+    flag = True
+    for i in range(H):
+        ny = y + i
+        if 0 > x-1 or rect[ny][x-1] == 1 or visit[ny][x-1] != -1:
+            flag = False
+            break
+    if flag:
+        queue.append((x-1,y))
+        visit[y][x-1] = visit[y][x] + 1
+    # 우
+    flag = True
+    for i in range(H):
+        ny = y + i
+        if x+W >= M or rect[ny][x+W] == 1 or visit[ny][x+W] != -1:
+            flag = False
+            break
+    if flag:
+        queue.append((x+1,y))
+        visit[y][x+1] = visit[y][x] + 1
+'''
