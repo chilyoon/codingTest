@@ -35,31 +35,58 @@ https://swexpertacademy.com/main/code/problem/problemDetail.do?problemLevel=3&co
 
 import sys
 sys.stdin = open("../input.txt", "r")
+#
+# from collections import defaultdict
+#
+# T = int(input())
+#
+# def dfs(count):
+#     global answer
+#     if count == 0:
+#         answer = max(int("".join(num)),answer)
+#         return
+#     for i in range(len(num)):
+#         for j in range(i+1,len(num)):
+#             num[i],num[j] = num[j],num[i]
+#             temp = "".join(num)
+#             # 딕셔너리에 있다면 0 반환 아니면 1 반환
+#             if visit.get((temp,count-1),1):
+#                 visit[(temp,count-1)] = 0
+#                 dfs(count-1)
+#             num[i], num[j] = num[j], num[i]
+#
+#
+# for t in range(1,T+1):
+#     num, change = map(int, input().split())
+#     num = list(str(num))
+#     answer = -1
+#     visit = defaultdict()
+#     dfs(change)
+#     print(f'#{t} {answer}')
 
-from collections import defaultdict
 
-T = int(input())
-
-def dfs(count):
+def dfs(cnt):
     global answer
-    if count == 0:
-        answer = max(int("".join(num)),answer)
+    if cnt == 0:
+        answer = max(int("".join(num)), answer)
         return
+
     for i in range(len(num)):
         for j in range(i+1,len(num)):
             num[i],num[j] = num[j],num[i]
-            temp = "".join(num)
-            # 딕셔너리에 있다면 0 반환 아니면 1 반환
-            if visit.get((temp,count-1),1):
-                visit[(temp,count-1)] = 0
-                dfs(count-1)
-            num[i], num[j] = num[j], num[i]
+            number = int("".join(num))
+            if (number,cnt) not in visit:
+                visit.append((number,cnt))
+                dfs(cnt-1)
+                # visit.remove(number)
+            num[i],num[j] = num[j],num[i]
 
+T = int(input())
 
 for t in range(1,T+1):
     num, change = map(int, input().split())
     num = list(str(num))
-    answer = -1
-    visit = defaultdict()
+    answer = 0
+    visit = []
     dfs(change)
     print(f'#{t} {answer}')
